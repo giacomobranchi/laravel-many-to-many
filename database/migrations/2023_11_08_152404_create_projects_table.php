@@ -17,6 +17,9 @@ return new class extends Migration
             $table->string('title');
             $table->string('slug');
             $table->text('content')->nullable();
+            $table->string('tech')->nullable();
+            $table->string('github')->nullable();
+            $table->string('website')->nullable();
             $table->timestamps();
         });
     }

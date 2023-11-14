@@ -36,7 +36,22 @@
                         <p><strong>Description: </strong>{{ $project->description }}</p>
                         <p><strong>Type:
                             </strong>{{ $project->type ? $project->type->name : 'Uncategorized' }}</p>
+                        <div class="d-flex gap-2">
+                            <strong>Technologies: </strong>
+                            <ul class="d-flex gap-1 list-unstyled">
+                                @forelse ($project->technologies as $technology)
+                                    <li>
+                                        <i class="fas fa-tag fa-xs fa-fw"></i>
+                                        {{ $technology->name }}
+                                    </li>
+                                @empty
+                                    <li>No Tech Selected</li>
+                                @endforelse
+                            </ul>
+                        </div>
                     </div>
+
+
                 </div>
             </div>
         </div>

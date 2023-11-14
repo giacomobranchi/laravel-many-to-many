@@ -63,6 +63,34 @@
                     @enderror
 
                     <div class="mb-3">
+                        <label for="technologies" class="form-label">Technologies</label>
+                        <select multiple class="form-select" name="technologies[]" id="technologies">
+                            <option disabled>Select one</option>
+
+                            <!-- TODO: Improve validation outputs -->
+                            @foreach ($technologies as $technology)
+                                @if ($errors->any())
+                                    <option value="{{ $technology->id }}"
+                                        {{ in_array($technology->id, old('technologies', [])) ? 'selected' : '' }}>
+                                        {{ $technology->name }}
+                                    </option>
+                                @else
+                                    <option value="{{ $technology->id }}"
+                                        {{ $post->technologies->contains($technology) ? 'selected' : '' }}>
+                                        {{ $technology->name }}
+                                    </option>
+                                @endif
+                            @endforeach
+
+
+                        </select>
+                    </div>
+                    @error('technologies')
+                        <div class="text-danger">{{ $message }}</div>
+                    @enderror
+
+
+                    <div class="mb-3">
 
                         <label for="content" class="form-label"><strong>Content</strong></label>
 
@@ -76,7 +104,7 @@
                     </div>
 
                     <div class="mb-3">
-                        <label for="github" class="form-label">Title</label>
+                        <label for="github" class="form-label">Link</label>
                         <input type="text" name="github" id="github"
                             class="form-control  @error('github') is-invalid  @enderror"
                             placeholder="Type the link to your code here" aria-describedby="helperTitle"

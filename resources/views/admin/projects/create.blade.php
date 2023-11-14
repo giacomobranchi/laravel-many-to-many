@@ -49,7 +49,27 @@
                                 </option>
                             @empty
                             @endforelse
+                        </select>
                     </div>
+
+                    <div class="mb-3">
+                        <label for="technologies" class="form-label"><strong>Technologies</strong></label>
+                        <select multiple class="form-select" name="technologies[]" id="technologies">
+                            <option disabled>Select one</option>
+
+                            @foreach ($technologies as $technology)
+                                <option value="{{ $technology->id }}"
+                                    {{ in_array($technology->id, old('technologies', [])) ? 'selected' : '' }}>
+                                    {{ $technology->name }}
+                                </option>
+                            @endforeach
+
+                        </select>
+
+                    </div>
+                    @error('technologies')
+                        <div class="text-danger">{{ $message }}</div>
+                    @enderror
 
                     <div class="mb-3">
 

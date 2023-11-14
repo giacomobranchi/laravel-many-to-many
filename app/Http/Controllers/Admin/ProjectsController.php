@@ -7,6 +7,7 @@ use App\Models\Project;
 use Illuminate\Http\Request;
 use App\Http\Requests\StoreProjectRequest;
 use App\Http\Requests\UpdateProjectRequest;
+use App\Models\Technology;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use App\Models\Type;
@@ -31,7 +32,8 @@ class ProjectsController extends Controller
     public function create()
     {
         $types = Type::all();
-        return view('admin.projects.create', compact('types'));
+        $technologies = Technology::all();
+        return view('admin.projects.create', compact('types', 'technologies'));
     }
 
     /**
@@ -50,6 +52,7 @@ class ProjectsController extends Controller
 
         //dd($valData);
         $newProject = Project::create($valData);
+        $newProject->technologies()->attach($request->technologies);
 
         return to_route('admin.projects.index')->with('status', 'Well Done, New Entry Added Succeffully');
     }
@@ -68,7 +71,8 @@ class ProjectsController extends Controller
     public function edit(Project $project)
     {
         $types = Type::all();
-        return view('admin.projects.edit', compact('project', 'types'));
+        $technologies = Technology::all();
+        return view('admin.projects.edit', compact('project', 'types', 'technologies'));
     }
 
     /**
@@ -95,6 +99,10 @@ class ProjectsController extends Controller
         }
 
         $project->update($valData);
+
+        if ($request->has('technologies')) {
+            $project->technologies()->sync($valData['technologies']);
+        }
         return to_route('admin.projects.show', $project->id)->with('status', 'Well Done, Element Edited Succeffully');
     }
 
@@ -103,6 +111,8 @@ class ProjectsController extends Controller
      */
     public function destroy(Project $project)
     {
+
+        $project->Technologies()->detach();
         $project->delete();
 
         return to_route('admin.projects.index')->with('status', 'Well Done, Element Moved to the Recycle Bin Succeffully');
@@ -140,6 +150,7 @@ class ProjectsController extends Controller
             // dd($project->thumb);
             Storage::delete($project->thumb);
         } */
+        $project->technologies()->detach();
 
         $project->forceDelete();
 
