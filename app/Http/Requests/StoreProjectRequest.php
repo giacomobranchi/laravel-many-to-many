@@ -30,7 +30,7 @@ class StoreProjectRequest extends FormRequest
             'technologies' => ['nullable', 'exists:technologies,id'],
             'cover_image' => 'nullable|image|max:300',
             'github' => 'nullable|bail|min:3|max:2048',
-            'website' => 'nullable|bail|min:3|max:2048',
+            'website' => 'nullable|bail|min:3|max:2048'
 
         ];
     }

@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::table('projects', function (Blueprint $table) {
             $table->softDeletes();
-            $table->string('github');
-            $table->string('website');
+            /* $table->string('github');
+            $table->string('website'); */
         });
     }
 

@@ -50,7 +50,7 @@
 
                             @forelse ($types as $type)
                                 <option value="{{ $type->id }}"
-                                    {{ $type->id == old('type_id', $post->type_id) ? 'selected' : '' }}>
+                                    {{ $type->id == old('type_id', $project->type_id) ? 'selected' : '' }}>
                                     {{ $type->name }}</option>
                             @empty
                             @endforelse
@@ -76,7 +76,7 @@
                                     </option>
                                 @else
                                     <option value="{{ $technology->id }}"
-                                        {{ $post->technologies->contains($technology) ? 'selected' : '' }}>
+                                        {{ $project->technologies->contains($technology) ? 'selected' : '' }}>
                                         {{ $technology->name }}
                                     </option>
                                 @endif
