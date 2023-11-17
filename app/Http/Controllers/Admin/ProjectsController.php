@@ -11,7 +11,7 @@ use App\Models\Technology;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use App\Models\Type;
-
+use Illuminate\Pagination\Paginator;
 
 
 class ProjectsController extends Controller
@@ -22,7 +22,7 @@ class ProjectsController extends Controller
      */
     public function index()
     {
-        $projects = Project::all();
+        $projects = Project::orderByDesc('id')->paginate(10);
         return view('admin.projects.index', compact('projects'));
     }
 
